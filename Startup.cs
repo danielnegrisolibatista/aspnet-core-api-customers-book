@@ -28,6 +28,7 @@ namespace aspnet_core_api_data_driven_customers_book
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(option => option.UseInMemoryDatabase("CustomersBook"));
+            services.AddScoped<DataContext, DataContext>();
             services.AddControllers();
         }
 
