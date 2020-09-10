@@ -23,5 +23,8 @@ namespace aspnet_core_api_data_driven_customers_book.Models
 
         [Required(ErrorMessage = "This field is required")]
         public DateTime Birthday { get; set; }
+
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
     }
 }
