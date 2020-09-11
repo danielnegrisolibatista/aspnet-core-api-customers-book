@@ -28,7 +28,7 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
                 .AsNoTracking()
                 .ToListAsync();
 
-            return customers;
+            return Ok(customers);
         }
 
         [HttpGet]
@@ -39,26 +39,31 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
                     .AsNoTracking()
                     .SingleOrDefaultAsync(s => s.Id == id);
 
-            if (customer != null)
+            if (customer == null)
             {
-                return customer;
+                return NotFound(); 
             }
-            else
-            {
-                return NotFound();
-            }
+
+            return Ok(customer);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<Customer>> Post([FromBody] Customer customer)
+        public async Task<ActionResult<CustomerInputModel>> Post([FromBody] CustomerInputModel customerInputModel)
         {
+            if (customerInputModel == null)
+            {
+                return BadRequest();
+            }
+
             if (ModelState.IsValid)
             {
+                Customer customer = new Customer(customerInputModel.FirstName, customerInputModel.LastName, customerInputModel.Birthday);
+
                 _dataContext.Customers.Add(customer);
                 await _dataContext.SaveChangesAsync();
 
-                return customer;
+                return CreatedAtAction(nameof(GetById), new { id = customer.Id }, customer);
             }
             else
             {
@@ -68,33 +73,53 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<ActionResult<Customer>> Put(int id, [FromBody] Customer customer)
+        public async Task<ActionResult<CustomerInputModel>> Put(int id, [FromBody] CustomerInputModel customerInputModel)
         {
+            if (customerInputModel == null)
+            {
+                return BadRequest();
+            }
+
             if (ModelState.IsValid)
             {
-                Customer updateCustomer = await _dataContext.Customers
-                    .FirstOrDefaultAsync(s => s.Id == id);
+                Customer customer = await _dataContext.Customers
+                    .SingleOrDefaultAsync(s => s.Id == id);
 
-                if (updateCustomer != null)
+                if (customer == null)
                 {
-                    updateCustomer.FirstName = customer.FirstName;
-                    updateCustomer.LastName = customer.LastName;
-                    updateCustomer.Birthday = customer.Birthday;
-
-                    _dataContext.Customers.Update(updateCustomer);
-                    await _dataContext.SaveChangesAsync();
-
-                    return updateCustomer;
+                    return NotFound();
                 }
-                else
-                {
-                    return NotFound(customer);
-                }
+
+                customer.FirstName = customerInputModel.FirstName;
+                customer.LastName = customerInputModel.LastName;
+                customer.Birthday = customerInputModel.Birthday;
+
+                await _dataContext.SaveChangesAsync();
+
+                return NoContent();
             } 
             else
             {
                 return BadRequest();
             }
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<ActionResult<Customer>> Delete(int id)
+        {
+            Customer customer = await _dataContext.Customers
+                .SingleOrDefaultAsync(s => s.Id == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            _dataContext.Customers.Remove(customer);
+            await _dataContext.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

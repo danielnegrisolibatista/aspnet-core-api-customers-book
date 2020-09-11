@@ -8,6 +8,13 @@ namespace aspnet_core_api_data_driven_customers_book.Models
 {
     public class Customer
     {
+        public Customer(string firstName, string lastName, DateTime birthday)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Birthday = birthday;
+        }
+
         [Key]
         public int Id { get; set; }
         
@@ -23,8 +30,5 @@ namespace aspnet_core_api_data_driven_customers_book.Models
 
         [Required(ErrorMessage = "This field is required")]
         public DateTime Birthday { get; set; }
-
-        public int AddressId { get; set; }
-        public Address Address { get; set; }
     }
 }
