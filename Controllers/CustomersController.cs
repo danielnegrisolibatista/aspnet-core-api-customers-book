@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using aspnet_core_api_data_driven_customers_book.Data;
+using aspnet_core_api_data_driven_customers_book.Data.Repositories;
 using aspnet_core_api_data_driven_customers_book.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace aspnet_core_api_data_driven_customers_book.Controllers
 {
@@ -13,20 +10,18 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
     [Route("v1/customers")]
     public class CustomersController : ControllerBase
     {
-        private readonly DataContext _dataContext;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomersController(DataContext dataContext)
+        public CustomersController(ICustomerRepository customerRepository)
         {
-            _dataContext = dataContext;
+            _customerRepository = customerRepository;
         }
 
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<List<Customer>>> Get()
         {
-            List<Customer> customers = await _dataContext.Customers
-                .AsNoTracking()
-                .ToListAsync();
+            List<Customer> customers = await _customerRepository.Get();
 
             return Ok(customers);
         }
@@ -35,9 +30,7 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
         [Route("{id:int}")]
         public async Task<ActionResult<Customer>> GetById(int id)
         {
-            Customer customer = await _dataContext.Customers
-                    .AsNoTracking()
-                    .SingleOrDefaultAsync(s => s.Id == id);
+            Customer customer = await _customerRepository.GetById(id);
 
             if (customer == null)
             {
@@ -60,8 +53,7 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
             {
                 Customer customer = new Customer(customerInputModel.FirstName, customerInputModel.LastName, customerInputModel.Birthday);
 
-                _dataContext.Customers.Add(customer);
-                await _dataContext.SaveChangesAsync();
+                await _customerRepository.SaveAsync(customer);
 
                 return CreatedAtAction(nameof(GetById), new { id = customer.Id }, customer);
             }
@@ -82,8 +74,7 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
 
             if (ModelState.IsValid)
             {
-                Customer customer = await _dataContext.Customers
-                    .SingleOrDefaultAsync(s => s.Id == id);
+                Customer customer = await _customerRepository.GetById(id);
 
                 if (customer == null)
                 {
@@ -94,7 +85,7 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
                 customer.LastName = customerInputModel.LastName;
                 customer.Birthday = customerInputModel.Birthday;
 
-                await _dataContext.SaveChangesAsync();
+                await _customerRepository.UpdateAsync(customer);
 
                 return NoContent();
             } 
@@ -108,16 +99,14 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
         [Route("{id:int}")]
         public async Task<ActionResult<Customer>> Delete(int id)
         {
-            Customer customer = await _dataContext.Customers
-                .SingleOrDefaultAsync(s => s.Id == id);
+            Customer customer = await _customerRepository.GetById(id);
 
             if (customer == null)
             {
                 return NotFound();
             }
 
-            _dataContext.Customers.Remove(customer);
-            await _dataContext.SaveChangesAsync();
+            await _customerRepository.DeleteAsync(customer);
 
             return NoContent();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using aspnet_core_api_data_driven_customers_book.Data;
+using aspnet_core_api_data_driven_customers_book.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,7 +29,10 @@ namespace aspnet_core_api_data_driven_customers_book
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(option => option.UseInMemoryDatabase("CustomersBook"));
+            
             services.AddScoped<DataContext, DataContext>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+
             services.AddControllers();
         }
 

@@ -1,7 +1,5 @@
-﻿using aspnet_core_api_data_driven_customers_book.Data.Repositories.Interface;
-using aspnet_core_api_data_driven_customers_book.Models;
+﻿using aspnet_core_api_data_driven_customers_book.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,41 +15,38 @@ namespace aspnet_core_api_data_driven_customers_book.Data.Repositories
         }
         public async Task SaveAsync(Customer customer)
         {
-            await _dataContext.Customers
-                .AddAsync(customer)
-                .ConfigureAwait(false);
+            _dataContext.Customers
+                .Add(customer);
+
+            await _dataContext.SaveChangesAsync().ConfigureAwait(false);
         }
-        public Task UpdateAsync(Customer customer)
+        public async Task UpdateAsync(Customer customer)
         {
             _dataContext.Customers
                 .Update(customer);
 
-            return Task.CompletedTask;
+            await _dataContext.SaveChangesAsync().ConfigureAwait(false);
         }
-        public Task DeleteAsync(Customer customer)
+        public async Task DeleteAsync(Customer customer)
         {
             _dataContext.Customers
                 .Remove(customer);
 
-            return Task.CompletedTask;
+            await _dataContext.SaveChangesAsync().ConfigureAwait(false);
         }
         public async Task<List<Customer>> Get()
         {
-            return await _dataContext.Customers
-                .ToListAsync()
+            var customers = _dataContext.Customers.ToList();
+
+            return await Task.FromResult(customers)
                 .ConfigureAwait(false);
         }
         public async Task<Customer> GetById(int customerId)
         {
             var customer = await _dataContext.Customers
-                .Where(s => s.Id.Equals(customerId))
+                .Where(s => s.Id == customerId)
                 .SingleOrDefaultAsync()
                 .ConfigureAwait(false);
-
-            if (customer is null)
-            {
-                return null!;
-            }
 
             return customer;
         }
