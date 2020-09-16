@@ -18,21 +18,21 @@ namespace aspnet_core_api_data_driven_customers_book.Data.Repositories
             _dataContext.Customers
                 .Add(customer);
 
-            await _dataContext.SaveChangesAsync().ConfigureAwait(false);
+            await _dataContext.SaveChangesAsync();
         }
         public async Task UpdateAsync(Customer customer)
         {
             _dataContext.Customers
                 .Update(customer);
 
-            await _dataContext.SaveChangesAsync().ConfigureAwait(false);
+            await _dataContext.SaveChangesAsync();
         }
         public async Task DeleteAsync(Customer customer)
         {
             _dataContext.Customers
                 .Remove(customer);
 
-            await _dataContext.SaveChangesAsync().ConfigureAwait(false);
+            await _dataContext.SaveChangesAsync();
         }
         public async Task<List<Customer>> Get()
         {
@@ -45,8 +45,7 @@ namespace aspnet_core_api_data_driven_customers_book.Data.Repositories
         {
             var customer = await _dataContext.Customers
                 .Where(s => s.Id == customerId)
-                .SingleOrDefaultAsync()
-                .ConfigureAwait(false);
+                .SingleOrDefaultAsync();
 
             return customer;
         }
