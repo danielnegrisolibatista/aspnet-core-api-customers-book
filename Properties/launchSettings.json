@@ -8,7 +8,7 @@
     },
     "iisExpress": {
       "applicationUrl": "http://localhost:5000",
-      "sslPort": 44363
+      "sslPort": 44384
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -16,9 +16,11 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "ancmHostingModel": "InProcess"
     },
     "aspnet_core_api_data_driven_customers_book": {
       "commandName": "IISExpress",
