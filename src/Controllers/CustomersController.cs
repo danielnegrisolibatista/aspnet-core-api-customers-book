@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using aspnet_core_api_data_driven_customers_book.Data.Repositories;
 using aspnet_core_api_data_driven_customers_book.Models;
+using aspnet_core_api_data_driven_customers_book.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace aspnet_core_api_data_driven_customers_book.Controllers
@@ -10,10 +11,14 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
     [Route("v1/customers")]
     public class CustomersController : ControllerBase
     {
+        private readonly ICustomerService _customerService;
         private readonly ICustomerRepository _customerRepository;
 
-        public CustomersController(ICustomerRepository customerRepository)
+        public CustomersController(
+            ICustomerService customerService, 
+            ICustomerRepository customerRepository)
         {
+            _customerService = customerService;
             _customerRepository = customerRepository;
         }
 
@@ -53,7 +58,7 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
             {
                 Customer customer = new Customer(customerInputModel.FirstName, customerInputModel.LastName, customerInputModel.Birthday);
 
-                await _customerRepository.SaveAsync(customer);
+                await _customerService.CreateCustomer(customer);
 
                 return CreatedAtAction(nameof(GetById), new { id = customer.Id }, customer);
             }
@@ -85,7 +90,7 @@ namespace aspnet_core_api_data_driven_customers_book.Controllers
                 customer.LastName = customerInputModel.LastName;
                 customer.Birthday = customerInputModel.Birthday;
 
-                await _customerRepository.UpdateAsync(customer);
+                await _customerService.UpdateCustomer(customer);
 
                 return NoContent();
             } 

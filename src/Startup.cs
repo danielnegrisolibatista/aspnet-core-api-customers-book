@@ -1,12 +1,12 @@
 using aspnet_core_api_data_driven_customers_book.Data;
 using aspnet_core_api_data_driven_customers_book.Data.Repositories;
+using aspnet_core_api_data_driven_customers_book.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace aspnet_core_api_data_driven_customers_book
 {
@@ -26,6 +26,8 @@ namespace aspnet_core_api_data_driven_customers_book
             
             services.AddScoped<DataContext, DataContext>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            
+            services.AddScoped<ICustomerService, CustomerService>();
 
             services.AddControllers();
         }
