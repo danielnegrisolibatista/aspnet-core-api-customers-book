@@ -1,9 +1,9 @@
-﻿using aspnet_core_api_data_driven_customers_book.Data.Repositories;
-using aspnet_core_api_data_driven_customers_book.Models;
+﻿using CustomersBook.API.Data.Repositories;
+using CustomersBook.API.Models;
 using System;
 using System.Threading.Tasks;
 
-namespace aspnet_core_api_data_driven_customers_book.Services
+namespace CustomersBook.API.Services
 {
     public class CustomerService : ICustomerService
     {

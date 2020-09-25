@@ -1,6 +1,6 @@
-using aspnet_core_api_data_driven_customers_book.Data;
-using aspnet_core_api_data_driven_customers_book.Data.Repositories;
-using aspnet_core_api_data_driven_customers_book.Services;
+using CustomersBook.API.Data;
+using CustomersBook.API.Data.Repositories;
+using CustomersBook.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace aspnet_core_api_data_driven_customers_book
+namespace CustomersBook.API
 {
     public class Startup
     {

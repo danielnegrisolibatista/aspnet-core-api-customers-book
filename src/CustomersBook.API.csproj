@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>aspnet_core_api_data_driven_customers_book</RootNamespace>
+    <RootNamespace>CustomersBook.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
-﻿using aspnet_core_api_data_driven_customers_book.Models;
+﻿using CustomersBook.API.Models;
 using System.Threading.Tasks;
 
-namespace aspnet_core_api_data_driven_customers_book.Services
+namespace CustomersBook.API.Services
 {
     public interface ICustomerService
     {

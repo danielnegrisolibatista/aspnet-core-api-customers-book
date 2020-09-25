@@ -1,11 +1,11 @@
-﻿using aspnet_core_api_data_driven_customers_book.Models;
+﻿using CustomersBook.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace aspnet_core_api_data_driven_customers_book.Data
+namespace CustomersBook.API.Data
 {
     public class DataContext : DbContext
     {

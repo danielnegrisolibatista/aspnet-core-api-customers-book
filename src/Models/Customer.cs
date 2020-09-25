@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace aspnet_core_api_data_driven_customers_book.Models
+namespace CustomersBook.API.Models
 {
     public class Customer
     {

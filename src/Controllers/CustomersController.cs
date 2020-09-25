@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using aspnet_core_api_data_driven_customers_book.Data.Repositories;
-using aspnet_core_api_data_driven_customers_book.Models;
-using aspnet_core_api_data_driven_customers_book.Services;
+using CustomersBook.API.Data.Repositories;
+using CustomersBook.API.Models;
+using CustomersBook.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace aspnet_core_api_data_driven_customers_book.Controllers
+namespace CustomersBook.API.Controllers
 {
     [ApiController]
     [Route("v1/customers")]

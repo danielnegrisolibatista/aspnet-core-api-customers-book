@@ -1,8 +1,8 @@
-﻿using aspnet_core_api_data_driven_customers_book.Models;
+﻿using CustomersBook.API.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace aspnet_core_api_data_driven_customers_book.Data.Repositories
+namespace CustomersBook.API.Data.Repositories
 {
     public interface ICustomerRepository
     {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace aspnet_core_api_data_driven_customers_book
+namespace CustomersBook.API
 {
     public class Program
     {
