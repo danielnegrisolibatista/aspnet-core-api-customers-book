@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CustomersBook.API.Models
+namespace CustomersBook.API.DTO
 {
-    public class CustomerInputModel
+    public class CreateCustomerModel
     {
         [Required(ErrorMessage = "This field is required")]
         [MaxLength(255, ErrorMessage = "This field should contains between 2 and 255 characteres")]
@@ -17,5 +17,12 @@ namespace CustomersBook.API.Models
 
         [Required(ErrorMessage = "This field is required")]
         public DateTime Birthday { get; set; }
+
+        public CreateCustomerModel(string firstName, string lastName, DateTime birthday)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Birthday = birthday;
+        }
     }
 }

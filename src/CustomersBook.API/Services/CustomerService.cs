@@ -1,5 +1,7 @@
 ﻿using CustomersBook.API.Data.Repositories;
-using CustomersBook.API.Models;
+using CustomersBook.API.DTO;
+using CustomersBook.API.Entities;
+using CustomersBook.API.Mapper;
 using System;
 using System.Threading.Tasks;
 
@@ -13,14 +15,31 @@ namespace CustomersBook.API.Services
             _customerRepository = customerRepository;
         }
 
-        public Task CreateCustomer(Customer customer)
+        public async Task<CustomerModel> CreateCustomer(CreateCustomerModel createCustomerModel)
         {
-            return _customerRepository.SaveAsync(customer);
+            Customer customer = new Customer(createCustomerModel.FirstName, createCustomerModel.LastName, createCustomerModel.Birthday);
+
+            await _customerRepository.SaveAsync(customer);
+
+            return customer.ConvertToCustomer();
         }
 
-        public Task UpdateCustomer(Customer customer)
+        public async Task<CustomerModel> UpdateCustomer(int id, UpdateCustomerModel updateCustomerModel)
         {
-            return _customerRepository.UpdateAsync(customer);
+            Customer customer = await _customerRepository.GetById(id);
+
+            if (customer == null)
+            {
+                return default;
+            }
+
+            customer.FirstName = updateCustomerModel.FirstName;
+            customer.LastName = updateCustomerModel.LastName;
+            customer.Birthday = updateCustomerModel.Birthday;
+
+            await _customerRepository.UpdateAsync(customer);
+
+            return customer.ConvertToCustomer();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CustomersBook.API.Models;
+﻿using CustomersBook.API.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
