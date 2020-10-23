@@ -26,18 +26,18 @@ namespace CustomersBook.API.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<List<CustomerModel>>> Get()
+        public ActionResult<List<CustomerModel>> Get()
         {
-            List<Customer> customers = await _customerRepository.Get();
+            List<Customer> customers = _customerRepository.Get();
 
             return Ok(customers.ConvertToCustomers());
         }
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<ActionResult<CustomerModel>> GetById(int id)
+        public ActionResult<CustomerModel> GetById(int id)
         {
-            Customer customer = await _customerRepository.GetById(id);
+            Customer customer = _customerRepository.GetById(id);
 
             if (customer == null)
             {
@@ -49,7 +49,7 @@ namespace CustomersBook.API.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<CustomerModel>> Post([FromBody] CreateCustomerModel createCustomerModel)
+        public ActionResult<CustomerModel> Post([FromBody] CreateCustomerModel createCustomerModel)
         {
             if (createCustomerModel == null)
             {
@@ -58,7 +58,7 @@ namespace CustomersBook.API.Controllers
 
             if (ModelState.IsValid)
             {
-                var customerModel = await _customerService.CreateCustomer(createCustomerModel);
+                var customerModel = _customerService.CreateCustomer(createCustomerModel);
 
                 return CreatedAtAction(nameof(GetById), new { id = customerModel.Id }, customerModel);
             }
@@ -70,7 +70,7 @@ namespace CustomersBook.API.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<ActionResult<CustomerModel>> Put(int id, [FromBody] UpdateCustomerModel customerInputModel)
+        public ActionResult<CustomerModel> Put(int id, [FromBody] UpdateCustomerModel customerInputModel)
         {
             if (customerInputModel == null)
             {
@@ -80,7 +80,7 @@ namespace CustomersBook.API.Controllers
             if (ModelState.IsValid)
             {
 
-                await _customerService.UpdateCustomer(id, customerInputModel);
+                _customerService.UpdateCustomer(id, customerInputModel);
 
                 return NoContent();
             } 
@@ -92,16 +92,16 @@ namespace CustomersBook.API.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
-        public async Task<ActionResult<CustomerModel>> Delete(int id)
+        public ActionResult<CustomerModel> Delete(int id)
         {
-            Customer customer = await _customerRepository.GetById(id);
+            Customer customer = _customerRepository.GetById(id);
 
             if (customer == null)
             {
                 return NotFound();
             }
 
-            await _customerRepository.DeleteAsync(customer);
+            _customerRepository.Delete(customer);
 
             return NoContent();
         }

@@ -3,6 +3,7 @@ using CustomersBook.API.DTO;
 using CustomersBook.API.Entities;
 using CustomersBook.API.Mapper;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CustomersBook.API.Services
@@ -15,18 +16,18 @@ namespace CustomersBook.API.Services
             _customerRepository = customerRepository;
         }
 
-        public async Task<CustomerModel> CreateCustomer(CreateCustomerModel createCustomerModel)
+        public CustomerModel CreateCustomer(CreateCustomerModel createCustomerModel)
         {
             Customer customer = new Customer(createCustomerModel.FirstName, createCustomerModel.LastName, createCustomerModel.Birthday);
 
-            await _customerRepository.SaveAsync(customer);
+            _customerRepository.Save(customer);
 
             return customer.ConvertToCustomer();
         }
 
-        public async Task<CustomerModel> UpdateCustomer(int id, UpdateCustomerModel updateCustomerModel)
+        public CustomerModel UpdateCustomer(int id, UpdateCustomerModel updateCustomerModel)
         {
-            Customer customer = await _customerRepository.GetById(id);
+            Customer customer = _customerRepository.GetById(id);
 
             if (customer == null)
             {
@@ -37,9 +38,24 @@ namespace CustomersBook.API.Services
             customer.LastName = updateCustomerModel.LastName;
             customer.Birthday = updateCustomerModel.Birthday;
 
-            await _customerRepository.UpdateAsync(customer);
+            _customerRepository.Update(customer);
 
             return customer.ConvertToCustomer();
+        }
+
+        public void DeleteCustomer(UpdateCustomerModel updateCustomerModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CustomerModel GetCustomerById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<CustomerModel> GetCustomers()
+        {
+            throw new NotImplementedException();
         }
     }
 }

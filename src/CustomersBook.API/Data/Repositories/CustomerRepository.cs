@@ -13,39 +13,38 @@ namespace CustomersBook.API.Data.Repositories
         {
             _dataContext = dataContext;
         }
-        public async Task SaveAsync(Customer customer)
+        public void Save(Customer customer)
         {
             _dataContext.Customers
                 .Add(customer);
 
-            await _dataContext.SaveChangesAsync();
+            _dataContext.SaveChanges();
         }
-        public async Task UpdateAsync(Customer customer)
+        public void Update(Customer customer)
         {
             _dataContext.Customers
                 .Update(customer);
 
-            await _dataContext.SaveChangesAsync();
+            _dataContext.SaveChanges();
         }
-        public async Task DeleteAsync(Customer customer)
+        public void Delete(Customer customer)
         {
             _dataContext.Customers
                 .Remove(customer);
 
-            await _dataContext.SaveChangesAsync();
+            _dataContext.SaveChanges();
         }
-        public async Task<List<Customer>> Get()
+        public List<Customer> Get()
         {
             var customers = _dataContext.Customers.ToList();
 
-            return await Task.FromResult(customers)
-                .ConfigureAwait(false);
+            return customers;
         }
-        public async Task<Customer> GetById(int customerId)
+        public Customer GetById(int customerId)
         {
-            var customer = await _dataContext.Customers
+            var customer = _dataContext.Customers
                 .Where(s => s.Id == customerId)
-                .SingleOrDefaultAsync();
+                .SingleOrDefault();
 
             return customer;
         }

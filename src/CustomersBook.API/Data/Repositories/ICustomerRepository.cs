@@ -6,10 +6,10 @@ namespace CustomersBook.API.Data.Repositories
 {
     public interface ICustomerRepository
     {
-        Task SaveAsync(Customer customer);
-        Task UpdateAsync(Customer customer);
-        Task DeleteAsync(Customer customer);
-        Task<List<Customer>> Get();
-        Task<Customer> GetById(int customerId);
+        void Save(Customer customer);
+        void Update(Customer customer);
+        void Delete(Customer customer);
+        List<Customer> Get();
+        Customer GetById(int customerId);
     }
 }
