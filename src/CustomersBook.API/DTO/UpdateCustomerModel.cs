@@ -19,6 +19,11 @@ namespace CustomersBook.API.DTO
 
         [Required(ErrorMessage = "This field is required")]
         public DateTime Birthday { get; set; }
+
+        public UpdateCustomerModel()
+        {
+
+        }
         public UpdateCustomerModel(string firstName, string lastName, DateTime birthday)
         {
             FirstName = firstName;

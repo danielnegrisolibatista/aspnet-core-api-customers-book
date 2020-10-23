@@ -9,8 +9,8 @@ namespace CustomersBook.API.Services
     {
         CustomerModel CreateCustomer(CreateCustomerModel createCustomerModel);
         CustomerModel UpdateCustomer(int id, UpdateCustomerModel updateCustomerModel);
-        void DeleteCustomer(UpdateCustomerModel updateCustomerModel);
+        void DeleteCustomer(int customerModel);
         CustomerModel GetCustomerById(int id);
-        IEnumerable<CustomerModel> GetCustomers();
+        List<CustomerModel> GetCustomers();
     }
 }

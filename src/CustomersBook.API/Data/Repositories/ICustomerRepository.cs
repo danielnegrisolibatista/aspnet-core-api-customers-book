@@ -9,7 +9,7 @@ namespace CustomersBook.API.Data.Repositories
         void Save(Customer customer);
         void Update(Customer customer);
         void Delete(Customer customer);
-        List<Customer> Get();
+        IEnumerable<Customer> Get();
         Customer GetById(int customerId);
     }
 }

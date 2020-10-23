@@ -14,37 +14,33 @@ namespace CustomersBook.API.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
-        private readonly ICustomerRepository _customerRepository;
 
-        public CustomersController(
-            ICustomerService customerService, 
-            ICustomerRepository customerRepository)
+        public CustomersController(ICustomerService customerService)
         {
             _customerService = customerService;
-            _customerRepository = customerRepository;
         }
 
         [HttpGet]
         [Route("")]
         public ActionResult<List<CustomerModel>> Get()
         {
-            List<Customer> customers = _customerRepository.Get();
+            List<CustomerModel> customersModel = _customerService.GetCustomers();
 
-            return Ok(customers.ConvertToCustomers());
+            return Ok(customersModel);
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public ActionResult<CustomerModel> GetById(int id)
         {
-            Customer customer = _customerRepository.GetById(id);
+            CustomerModel customerModel = _customerService.GetCustomerById(id);
 
-            if (customer == null)
+            if (customerModel == null)
             {
                 return NotFound(); 
             }
 
-            return Ok(customer.ConvertToCustomer());
+            return Ok(customerModel);
         }
 
         [HttpPost]
@@ -79,7 +75,6 @@ namespace CustomersBook.API.Controllers
 
             if (ModelState.IsValid)
             {
-
                 _customerService.UpdateCustomer(id, customerInputModel);
 
                 return NoContent();
@@ -94,14 +89,14 @@ namespace CustomersBook.API.Controllers
         [Route("{id:int}")]
         public ActionResult<CustomerModel> Delete(int id)
         {
-            Customer customer = _customerRepository.GetById(id);
+            CustomerModel customerModel = _customerService.GetCustomerById(id);
 
-            if (customer == null)
+            if (customerModel == null)
             {
                 return NotFound();
             }
 
-            _customerRepository.Delete(customer);
+            _customerService.DeleteCustomer(id);
 
             return NoContent();
         }

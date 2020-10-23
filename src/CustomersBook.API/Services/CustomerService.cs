@@ -4,6 +4,7 @@ using CustomersBook.API.Entities;
 using CustomersBook.API.Mapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CustomersBook.API.Services
@@ -43,19 +44,38 @@ namespace CustomersBook.API.Services
             return customer.ConvertToCustomer();
         }
 
-        public void DeleteCustomer(UpdateCustomerModel updateCustomerModel)
+        public void DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            Customer customer = _customerRepository.GetById(id);
+
+            if (customer != null)
+            {
+                _customerRepository.Delete(customer);
+            }
         }
 
         public CustomerModel GetCustomerById(int id)
         {
-            throw new NotImplementedException();
+            Customer customer = _customerRepository.GetById(id);
+
+            if (customer == null)
+            {
+                return default;
+            }
+
+            return customer.ConvertToCustomer();
         }
 
-        public IEnumerable<CustomerModel> GetCustomers()
+        public List<CustomerModel> GetCustomers()
         {
-            throw new NotImplementedException();
+            List<Customer> customers = _customerRepository.Get().ToList();
+
+            if (customers == null)
+            {
+                return default;
+            }
+
+            return customers.ConvertToCustomers().ToList();
         }
     }
 }

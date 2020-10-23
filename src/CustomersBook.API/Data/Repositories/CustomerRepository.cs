@@ -34,7 +34,7 @@ namespace CustomersBook.API.Data.Repositories
 
             _dataContext.SaveChanges();
         }
-        public List<Customer> Get()
+        public IEnumerable<Customer> Get()
         {
             var customers = _dataContext.Customers.ToList();
 

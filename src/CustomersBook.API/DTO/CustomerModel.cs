@@ -12,6 +12,11 @@ namespace CustomersBook.API.DTO
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
 
+        public CustomerModel()
+        {
+
+        }
+
         public CustomerModel(string firstName, string lastName, DateTime birthday)
         {
             FirstName = firstName;
